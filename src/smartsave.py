@@ -1,9 +1,30 @@
 import logging
 
+from PySide2 import QtWidgets, QtCore
+from shiboken2 import wrapInstance
+import maya.OpenMayaUI as omui
 import pymel.core as pmc
 from pymel.core.system import Path
 
 log = logging.getLogger(__name__)
+
+
+def maya_main_window():
+    """Return the maya main window widget"""
+    main_window = omui.MQtUtil.mainWindow()
+    return wrapInstance(long(main_window), QtWidgets.QWidget)
+
+
+class SmartSaveUI(QtWidgets.QDialog):
+    """Smart Class UI Class"""
+
+    def __init__(self):
+        super(SmartSaveUI, self).__init__(parent=maya_main_window())
+        self.setWindowTitle("Smart Save")
+        self.setMinimumWidth(500)
+        self.setMaximumHeight(200)
+        self.setWindowFlags(self.windowFlags() ^
+                            QtCore.Qt.WindowContextHelpButtonHint)
 
 
 class SceneFile(object):
@@ -19,7 +40,7 @@ class SceneFile(object):
         if not path and scene:
             path = scene
         if not path and not scene:
-            log.warning("Unable to initialize scene file object from a new " 
+            log.warning("Unable to initialize scene file object from a new "
                         "scene. Please specify a path.")
             return
         self._init_from_path(path)
@@ -62,8 +83,8 @@ class SceneFile(object):
             descriptor=self.descriptor, task=self.task, ext=self.ext)
         matching_scenefiles = []
         for file_ in self.folder_path.files():
-          if file_.name.fnmatch(pattern):
-              matching_scenefiles.append(file_)
+            if file_.name.fnmatch(pattern):
+                matching_scenefiles.append(file_)
         if not matching_scenefiles:
             return 1
         matching_scenefiles.sort(reverse=True)
@@ -71,7 +92,6 @@ class SceneFile(object):
         latest_scenefile = latest_scenefile.name.stripext()
         latest_ver_num = int((latest_scenefile.split("_v"))[-1])
         return latest_ver_num + 1
-
 
     def increment_save(self):
         """Increments the version and saves the scene file.
