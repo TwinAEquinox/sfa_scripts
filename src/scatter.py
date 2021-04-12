@@ -295,3 +295,29 @@ class ScatterObject(object):
                 x_point, y_point, z_point = cmds.pointPosition(target)
                 cmds.move(x_point, y_point, z_point, self.scatterObject)
                 self.randomize()
+
+    def randomize(self):
+        xRot = random.uniform(self.scatter_x_min, self.scatter_x_max)
+        yRot = random.uniform(self.scatter_y_min, self.scatter_y_max)
+        zRot = random.uniform(self.scatter_z_min, self.scatter_z_max)
+        cmds.rotate(xRot, yRot, zRot, self.scatterObject)
+        scaleFactorX = random.uniform(self.scatter_scale_xmin,
+                                      self.scatter_scale_xmax)
+        scaleFactorY = random.uniform(self.scatter_scale_ymin,
+                                      self.scatter_scale_ymax)
+        scaleFactorZ = random.uniform(self.scatter_scale_zmin,
+                                      self.scatter_scale_zmax)
+        cmds.scale(scaleFactorX, scaleFactorY, scaleFactorZ,
+                   self.scatterObject)
+
+    def select_destination_object(self):
+        self.scatter_target_def = cmds.ls(os=True, fl=True)
+        for obj in self.scatter_target_def:
+            if 'vtx[' not in obj:
+                self.scatter_target_def.remove(obj)
+        self.current_target_def = self.scatter_target_def
+
+    def select_source_object(self):
+        self.scatter_obj_def = cmds.ls(os=True, o=True)
+        if len(self.scatter_obj_def) > 0:
+            self.current_object_def = self.scatter_obj_def[-1]
