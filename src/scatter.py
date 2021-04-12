@@ -29,15 +29,20 @@ class ScatterUI(QtWidgets.QDialog):
         self.connections()
         self.scatterobject = ScatterObject()
 
-    def create_ui(self):
+    def scat_ui(self):
         self.title_lbl = QtWidgets.QLabel("Scatter Tool")
         self.title_lbl.setStyleSheet("font: bold 20px")
-        self.button_lay = self._create_button_ui()
-        self.main_lay = QtWidgets.QVBoxLayout()
-        self.main_lay.addWidget(self.title_lbl)
-        self.main_lay.addStretch()
-        self.main_lay.addLayout(self.button_lay)
-        self.setLayout(self.main_lay)
+        layout = self.layouts()
+        layout.addWidget(self.title_lbl)
+        layout.addLayout(self.scatter_field_lay)
+        layout.addLayout(self.xrot_rand_lay)
+        layout.addLayout(self.yrot_rand_lay)
+        layout.addLayout(self.zrot_rand_lay)
+        layout.addLayout(self.xscale_rand_lay)
+        layout.addLayout(self.yscale_rand_lay)
+        layout.addLayout(self.zscale_rand_lay)
+        layout.addLayout(self.bottom_button_rand_lay)
+        return layout
 
     def _create_button_ui(self):
         self.scatter_btn = QtWidgets.QPushButton("Scatter")
