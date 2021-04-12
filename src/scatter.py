@@ -1,11 +1,10 @@
 import logging
+import random
 
 from PySide2 import QtWidgets, QtCore
 from shiboken2 import wrapInstance
 import maya.OpenMayaUI as omui
 import maya.cmds as cmds
-import pymel.core as pmc
-from pymel.core.system import Path
 
 log = logging.getLogger(__name__)
 
@@ -17,6 +16,7 @@ def maya_main_window():
 
 
 class ScatterUI(QtWidgets.QDialog):
+    """Scatter Tool UI Class"""
 
     def __init__(self):
         super(ScatterUI, self).__init__(parent=maya_main_window())
@@ -83,7 +83,7 @@ class ScatterUI(QtWidgets.QDialog):
 
     @QtCore.Slot()
     def scatter_click(self):
-        self.scatter_input()
+            self.scatter_input()
 
     def scatter_field_ui(self):
         layout = self.scatter_titles()
@@ -204,7 +204,7 @@ class ScatterUI(QtWidgets.QDialog):
         layout.addWidget(self.scale_zmax, 8, 0)
         return layout
 
-   def xscale_spinbox(self):
+    def xscale_spinbox(self):
         self.scale_xmin = QtWidgets.QDoubleSpinBox()
         self.scale_xmin.setMinimum(0.1)
         self.scale_xmin.setValue(1.0)
@@ -282,6 +282,7 @@ class ScatterUI(QtWidgets.QDialog):
     def lock_destination_object(self):
         self.scatterobject.select_destination_object()
         self.scatter_targ.setText(str(self.scatterobject.current_target_def))
+
 
 class ScatterObject(object):
 
