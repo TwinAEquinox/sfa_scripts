@@ -114,3 +114,42 @@ class ScatterUI(QtWidgets.QDialog):
         layout.addWidget(self.z_max_lbl, 13, 0)
         layout.addWidget(self.zrot_max, 14, 0)
         return layout
+
+    def xrot_spinbox(self):
+        self.xrot_min = QtWidgets.QSpinBox()
+        self.xrot_min.setMinimum(0)
+        self.xrot_min.setMaximum(360)
+        self.xrot_min.setMinimumWidth(100)
+        self.xrot_min.setSingleStep(10)
+        self.xrot_max = QtWidgets.QSpinBox()
+        self.xrot_max.setMinimum(0)
+        self.xrot_max.setMaximum(360)
+        self.xrot_max.setValue(360)
+        self.xrot_max.setMinimumWidth(100)
+        self.xrot_max.setSingleStep(10)
+
+    def yrot_spinbox(self):
+        self.yrot_min = QtWidgets.QSpinBox()
+        self.yrot_min.setMinimum(0)
+        self.yrot_min.setMaximum(360)
+        self.yrot_min.setMinimumWidth(100)
+        self.yrot_min.setSingleStep(10)
+        self.yrot_max = QtWidgets.QSpinBox()
+        self.yrot_max.setMinimum(0)
+        self.yrot_max.setMaximum(360)
+        self.yrot_max.setValue(360)
+        self.yrot_max.setMinimumWidth(100)
+        self.yrot_max.setSingleStep(10)
+
+    def zrot_spinbox(self):
+        self.zrot_min = QtWidgets.QSpinBox()
+        self.zrot_min.setMinimum(0)
+        self.zrot_min.setMaximum(360)
+        self.zrot_min.setMinimumWidth(100)
+        self.zrot_min.setSingleStep(10)
+        self.zrot_max = QtWidgets.QSpinBox()
+        self.zrot_max.setMinimum(0)
+        self.zrot_max.setMaximum(360)
+        self.zrot_max.setValue(360)
+        self.zrot_max.setMinimumWidth(100)
+        self.zrot_max.setSingleStep(10)
