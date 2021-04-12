@@ -81,3 +81,36 @@ class ScatterUI(QtWidgets.QDialog):
         layout.addWidget(self.scatter_targ, 3, 3)
         layout.addWidget(self.scatter_targ_pb, 1, 4)
         return layout
+
+    def xrot_ui(self):
+        layout = QtWidgets.QGridLayout()
+        self.x_min_lbl = QtWidgets.QLabel("X Rotation Min")
+        self.x_max_lbl = QtWidgets.QLabel("X Rotation Max")
+        self.xrot_spinbox()
+        layout.addWidget(self.x_min_lbl, 7, 0)
+        layout.addWidget(self.xrot_min, 8, 0)
+        layout.addWidget(self.x_max_lbl, 9, 0)
+        layout.addWidget(self.xrot_max, 10, 0)
+        return layout
+
+    def yrot_ui(self):
+        layout = QtWidgets.QGridLayout()
+        self.y_min_lbl = QtWidgets.QLabel("Y Rotation Min")
+        self.y_max_lbl = QtWidgets.QLabel("Y Rotation Max")
+        self.yrot_spinbox()
+        layout.addWidget(self.y_min_lbl, 9, 0)
+        layout.addWidget(self.yrot_min, 10, 0)
+        layout.addWidget(self.y_max_lbl, 11, 0)
+        layout.addWidget(self.yrot_max, 12, 0)
+        return layout
+
+    def zrot_ui(self):
+        layout = QtWidgets.QGridLayout()
+        self.z_min_lbl = QtWidgets.QLabel("Z Rotation Min")
+        self.z_max_lbl = QtWidgets.QLabel("Z Rotation Max")
+        self.zrot_spinbox()
+        layout.addWidget(self.z_min_lbl, 11, 0)
+        layout.addWidget(self.zrot_min, 12, 0)
+        layout.addWidget(self.z_max_lbl, 13, 0)
+        layout.addWidget(self.zrot_max, 14, 0)
+        return layout
