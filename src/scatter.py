@@ -267,3 +267,31 @@ class ScatterUI(QtWidgets.QDialog):
         self.scatter_targ.setText(str(self.scatterobject.current_target_def))
 
 class ScatterObject(object):
+
+    def __init__(self):
+        self.scatter_x_min = 0
+        self.scatter_x_max = 0
+        self.scatter_y_min = 0
+        self.scatter_y_max = 0
+        self.scatter_z_min = 0
+        self.scatter_z_max = 0
+        self.scatter_scale_xmin = 0
+        self.scatter_scale_xmax = 0
+        self.scatter_scale_ymin = 0
+        self.scatter_scale_ymax = 0
+        self.scatter_scale_zmin = 0
+        self.scatter_scale_zmax = 0
+        self.scatter_obj_def = None
+        self.current_object_def = None
+        self.scatter_target_def = None
+        self.current_target_def = None
+
+    def scatter_object(self):
+        if cmds.objectType(self.current_object_def) == "transform":
+            for target in self.scatter_target_def:
+                self.scatterObject = cmds.instance(self.current_object_def,
+                                                   name=self.current_object_def
+                                                   + "_instance#")
+                x_point, y_point, z_point = cmds.pointPosition(target)
+                cmds.move(x_point, y_point, z_point, self.scatterObject)
+                self.randomize()
