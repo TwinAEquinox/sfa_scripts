@@ -265,3 +265,5 @@ class ScatterUI(QtWidgets.QDialog):
     def lock_destination_object(self):
         self.scatterobject.select_destination_object()
         self.scatter_targ.setText(str(self.scatterobject.current_target_def))
+
+class ScatterObject(object):
