@@ -228,3 +228,17 @@ class ScatterUI(QtWidgets.QDialog):
         self.scale_zmax.setMaximum(10)
         self.scale_zmax.setMinimumWidth(100)
         self.scale_zmax.setSingleStep(.1)
+
+    def scatter_button(self):
+        layout = QtWidgets.QGridLayout()
+        self.scatter_btn = QtWidgets.QPushButton("Scatter")
+        layout.addWidget(self.scatter_btn, 13, 0)
+        return layout
+
+    def scatter_titles(self):
+        self.scatter_targ_lbl = QtWidgets.QLabel("Source Object")
+        self.scatter_obj_lbl = QtWidgets.QLabel("Destination Object")
+        layout = QtWidgets.QGridLayout()
+        layout.addWidget(self.scatter_targ_lbl, 2, 0)
+        layout.addWidget(self.scatter_obj_lbl, 2, 3)
+        return layout
