@@ -44,12 +44,26 @@ class ScatterUI(QtWidgets.QDialog):
         layout.addLayout(self.bottom_button_rand_lay)
         return layout
 
-    def _create_button_ui(self):
-        self.scatter_btn = QtWidgets.QPushButton("Scatter")
-        self.select_source_btn = QtWidgets.QPushButton("Select Source")
-        self.select_dest_btn = QtWidgets.QPushButton("Select Destination")
-        layout = QtWidgets.QHBoxLayout()
-        layout.addWidget(self.scatter_btn)
-        layout.addWidget(self.select_source_btn)
-        layout.addWidget(self.select_dest_btn)
-        return layout
+    def layouts(self):
+        main_lay = QtWidgets.QVBoxLayout()
+        self.ui_start()
+        self.xrot_rand_lay.setRowMinimumHeight(0, 20)
+        self.xrot_rand_lay.setRowMinimumHeight(1, 20)
+        self.yrot_rand_lay.setRowMinimumHeight(0, 20)
+        self.zrot_rand_lay.setRowMinimumHeight(0, 20)
+        self.xscale_rand_lay.setRowMinimumHeight(0, 40)
+        self.yscale_rand_lay.setRowMinimumHeight(0, 20)
+        self.zscale_rand_lay.setRowMinimumHeight(0, 20)
+        self.bottom_button_rand_lay.setRowMinimumHeight(0, 20)
+        self.setLayout(main_lay)
+        return main_lay
+
+    def ui_start(self):
+        self.scatter_field_lay = self.scatter_field_ui()
+        self.xrot_rand_lay = self.xrot_ui()
+        self.yrot_rand_lay = self.yrot_ui()
+        self.zrot_rand_lay = self.zrot_ui()
+        self.xscale_rand_lay = self.xscale_ui()
+        self.yscale_rand_lay = self.yscale_ui()
+        self.zscale_rand_lay = self.zscale_ui()
+        self.bottom_button_rand_lay = self.scatter_button()
