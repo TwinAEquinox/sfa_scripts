@@ -9,21 +9,25 @@ from pymel.core.system import Path
 
 log = logging.getLogger(__name__)
 
+
 def maya_main_window():
     """Return the maya main window widget"""
     main_window = omui.MQtUtil.mainWindow()
     return wrapInstance(long(main_window), QtWidgets.QWidget)
 
+
 class ScatterUI(QtWidgets.QDialog):
 
     def __init__(self):
         super(ScatterUI, self).__init__(parent=maya_main_window())
-        self.setWindowTitle("Smart Save")
-        self.setMinimumWidth(500)
-        self.setMaximumHeight(200)
+        self.setWindowTitle("Scatter Tool")
+        self.setFixedWidth(600)
+        self.setFixedHeight(850)
         self.setWindowFlags(self.windowFlags() ^
                             QtCore.Qt.WindowContextHelpButtonHint)
-        self.create_ui()
+        self.scat_ui()
+        self.connections()
+        self.scatterobject = ScatterObject()
 
     def create_ui(self):
         self.title_lbl = QtWidgets.QLabel("Scatter Tool")
@@ -37,6 +41,10 @@ class ScatterUI(QtWidgets.QDialog):
 
     def _create_button_ui(self):
         self.scatter_btn = QtWidgets.QPushButton("Scatter")
+        self.select_source_btn = QtWidgets.QPushButton("Select Source")
+        self.select_dest_btn = QtWidgets.QPushButton("Select Destination")
         layout = QtWidgets.QHBoxLayout()
         layout.addWidget(self.scatter_btn)
+        layout.addWidget(self.select_source_btn)
+        layout.addWidget(self.select_dest_btn)
         return layout
