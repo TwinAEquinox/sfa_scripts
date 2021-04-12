@@ -67,3 +67,17 @@ class ScatterUI(QtWidgets.QDialog):
         self.yscale_rand_lay = self.yscale_ui()
         self.zscale_rand_lay = self.zscale_ui()
         self.bottom_button_rand_lay = self.scatter_button()
+
+    def scatter_field_ui(self):
+        layout = self.scatter_titles()
+        self.scatter_obj = QtWidgets.QLineEdit()
+        self.scatter_obj_pb = QtWidgets.QPushButton("Select")
+        self.scatter_obj_pb.setFixedWidth(50)
+        self.scatter_targ = QtWidgets.QLineEdit()
+        self.scatter_targ_pb = QtWidgets.QPushButton("Select")
+        self.scatter_targ_pb.setFixedWidth(50)
+        layout.addWidget(self.scatter_obj, 3, 0)
+        layout.addWidget(self.scatter_obj_pb, 1, 2)
+        layout.addWidget(self.scatter_targ, 3, 3)
+        layout.addWidget(self.scatter_targ_pb, 1, 4)
+        return layout
