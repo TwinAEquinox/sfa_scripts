@@ -242,3 +242,26 @@ class ScatterUI(QtWidgets.QDialog):
         layout.addWidget(self.scatter_targ_lbl, 2, 0)
         layout.addWidget(self.scatter_obj_lbl, 2, 3)
         return layout
+
+    def scatter_input(self):
+        self.scatterobject.scatter_x_min = self.xrot_min.value()
+        self.scatterobject.scatter_x_max = self.xrot_max.value()
+        self.scatterobject.scatter_y_min = self.yrot_min.value()
+        self.scatterobject.scatter_y_max = self.yrot_max.value()
+        self.scatterobject.scatter_z_min = self.zrot_min.value()
+        self.scatterobject.scatter_z_max = self.zrot_max.value()
+        self.scatterobject.scatter_scale_xmin = self.scale_xmin.value()
+        self.scatterobject.scatter_scale_xmax = self.scale_xmax.value()
+        self.scatterobject.scatter_scale_ymin = self.scale_ymin.value()
+        self.scatterobject.scatter_scale_ymax = self.scale_ymax.value()
+        self.scatterobject.scatter_scale_zmin = self.scale_zmin.value()
+        self.scatterobject.scatter_scale_zmax = self.scale_zmax.value()
+        self.scatterobject.scatter_object()
+
+    def lock_source_object(self):
+        self.scatterobject.select_source_object()
+        self.scatter_obj.setText(self.scatterobject.current_object_def)
+
+    def lock_destination_object(self):
+        self.scatterobject.select_destination_object()
+        self.scatter_targ.setText(str(self.scatterobject.current_target_def))
