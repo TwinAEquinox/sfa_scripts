@@ -56,6 +56,7 @@ class ScatterUI(QtWidgets.QDialog):
         self.yscale_rand_lay.setRowMinimumHeight(0, 20)
         self.zscale_rand_lay.setRowMinimumHeight(0, 20)
         self.bottom_button_rand_lay.setRowMinimumHeight(0, 20)
+        self.selected_vert_perc_rand_lay.setRowMinimumHeight(0, 40)
         self.setLayout(main_lay)
         return main_lay
 
