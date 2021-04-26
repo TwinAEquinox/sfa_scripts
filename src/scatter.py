@@ -42,6 +42,7 @@ class ScatterUI(QtWidgets.QDialog):
         layout.addLayout(self.yscale_rand_lay)
         layout.addLayout(self.zscale_rand_lay)
         layout.addLayout(self.bottom_button_rand_lay)
+        layout.addLayout(self.selected_vert_perc_rand_lay)
         return layout
 
     def layouts(self):
