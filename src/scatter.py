@@ -286,12 +286,19 @@ class ScatterUI(QtWidgets.QDialog):
         layout.addWidget(self.selected_vert_perc, 15, 0)
         return layout
 
-    def _set_selected_vert_percentage_spinbox(self):
+    def _offset_spinbox(self):
+        self.obj_embed_offset = QtWidgets.QDoubleSpinBox()
+        self.obj_embed_offset.setMinimum(-10)
+        self.obj_embed_offset.setValue(0)
+        self.obj_embed_offset.setMaximum(10)
+        self.obj_embed_offset.setMinimumWidth(100)
+        self.obj_embed_offset.setSingleStep(.1)
+
+    def _vert_percent_spinbox(self):
         self.selected_vert_perc = QtWidgets.QSpinBox()
         self.selected_vert_perc.setMinimum(0)
         self.selected_vert_perc.setMaximum(100)
         self.selected_vert_perc.setValue(100)
-        self.selected_vert_perc.setMinimumWidth(100)
         self.selected_vert_perc.setSingleStep(5)
 
     def scatter_button(self):
