@@ -76,21 +76,28 @@ class ScatterUI(QtWidgets.QDialog):
         self.bottom_button_rand_lay = self._scat_button_ui()
 
     def connections(self):
-        self.scatter_btn.clicked.connect(self.scatter_click)
-        self.scatter_obj_pb.clicked.connect(self.click_src_obj)
-        self.scatter_targ_pb.clicked.connect(self.click_dest_obj)
+        """Connects Signals and Slots"""
+        self.scatter_btn.clicked.connect(self._scat_click)
+        self.scatter_obj_pb.clicked.connect(self._source_object_click)
+        self.scatter_targ_pb.clicked.connect(self._dest_object_click)
+        self.align_to_normals.clicked.connect(self._align_to_normals_click)
 
     @QtCore.Slot()
-    def click_src_obj(self):
-        self.lock_source_object()
+    def _source_object_click(self):
+        self._select_source_object()
 
     @QtCore.Slot()
-    def click_dest_obj(self):
-        self.lock_destination_object()
+    def _dest_object_click(self):
+        self._select_dest_object()
 
     @QtCore.Slot()
-    def scatter_click(self):
-            self.scatter_input()
+    def _align_to_normals_click(self):
+        self._align_to_normals_check()
+
+    @QtCore.Slot()
+    def _scat_click(self):
+        self._user_input_values()
+        self.scatterobject.scat_align_check()
 
     def scatter_field_ui(self):
         layout = self.scatter_titles()
