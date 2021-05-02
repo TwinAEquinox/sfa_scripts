@@ -21,8 +21,8 @@ class ScatterUI(QtWidgets.QDialog):
     def __init__(self):
         super(ScatterUI, self).__init__(parent=maya_main_window())
         self.setWindowTitle("Scatter Tool")
-        self.setFixedWidth(600)
-        self.setFixedHeight(850)
+        self.setFixedWidth(700)
+        self.setFixedHeight(900)
         self.setWindowFlags(self.windowFlags() ^
                             QtCore.Qt.WindowContextHelpButtonHint)
         self.scat_ui()
@@ -30,45 +30,50 @@ class ScatterUI(QtWidgets.QDialog):
         self.scatterobject = ScatterObject()
 
     def scat_ui(self):
-        self.title_lbl = QtWidgets.QLabel("Scatter Tool")
-        self.title_lbl.setStyleSheet("font: bold 20px")
+        self.title = QtWidgets.QLabel("Scatter Tool")
+        self.title.setStyleSheet("font: bold 25px")
         layout = self.layouts()
-        layout.addWidget(self.title_lbl)
-        layout.addLayout(self.scatter_field_lay)
+        layout.addWidget(self.title)
+        layout.addLayout(self.scatter_lay)
+        layout.addLayout(self.align_to_normals_lay)
         layout.addLayout(self.xrot_rand_lay)
         layout.addLayout(self.yrot_rand_lay)
         layout.addLayout(self.zrot_rand_lay)
         layout.addLayout(self.xscale_rand_lay)
         layout.addLayout(self.yscale_rand_lay)
         layout.addLayout(self.zscale_rand_lay)
-        layout.addLayout(self.bottom_button_rand_lay)
         layout.addLayout(self.selected_vert_perc_rand_lay)
+        layout.addStretch()
+        layout.addLayout(self.bottom_button_rand_lay)
         return layout
 
     def layouts(self):
         main_lay = QtWidgets.QVBoxLayout()
         self.ui_start()
         self.xrot_rand_lay.setRowMinimumHeight(0, 20)
-        self.xrot_rand_lay.setRowMinimumHeight(1, 20)
+        self.xrot_rand_lay.setRowMinimumHeight(0, 20)
         self.yrot_rand_lay.setRowMinimumHeight(0, 20)
         self.zrot_rand_lay.setRowMinimumHeight(0, 20)
         self.xscale_rand_lay.setRowMinimumHeight(0, 40)
         self.yscale_rand_lay.setRowMinimumHeight(0, 20)
         self.zscale_rand_lay.setRowMinimumHeight(0, 20)
         self.bottom_button_rand_lay.setRowMinimumHeight(0, 20)
-        self.selected_vert_perc_rand_lay.setRowMinimumHeight(0, 40)
+        self.selected_vert_perc_rand_lay.setRowMinimumHeight(0, 20)
         self.setLayout(main_lay)
         return main_lay
 
     def ui_start(self):
-        self.scatter_field_lay = self.scatter_field_ui()
-        self.xrot_rand_lay = self.xrot_ui()
-        self.yrot_rand_lay = self.yrot_ui()
-        self.zrot_rand_lay = self.zrot_ui()
-        self.xscale_rand_lay = self.xscale_ui()
-        self.yscale_rand_lay = self.yscale_ui()
-        self.zscale_rand_lay = self.zscale_ui()
-        self.bottom_button_rand_lay = self.scatter_button()
+        self.scatter_lay = self._scat_field_ui()
+        self.align_to_normals_lay = self._align_to_normals_ui()
+        self.xrot_rand_lay = self._xrot_ui()
+        self.yrot_rand_lay = self._yrot_ui()
+        self.zrot_rand_lay = self._zrot_ui()
+        self.xscale_rand_lay = self._xscale_ui()
+        self.yscale_rand_lay = self._yscale_ui()
+        self.zscale_rand_lay = self._zscale_ui()
+        self.selected_vert_perc_rand_lay = \
+            self._vert_percent_offset_ui()
+        self.bottom_button_rand_lay = self._scat_button_ui()
 
     def connections(self):
         self.scatter_btn.clicked.connect(self.scatter_click)
@@ -248,10 +253,26 @@ class ScatterUI(QtWidgets.QDialog):
         self.scale_zmax.setMinimumWidth(100)
         self.scale_zmax.setSingleStep(.1)
 
+    def _create_selected_vert_percentage_ui(self):
+        layout = QtWidgets.QGridLayout()
+        self.selected_vert_lbl = QtWidgets.QLabel("Scatter Percentage")
+        self._set_selected_vert_percentage_spinbox()
+        layout.addWidget(self.selected_vert_lbl, 14, 0)
+        layout.addWidget(self.selected_vert_perc, 15, 0)
+        return layout
+
+    def _set_selected_vert_percentage_spinbox(self):
+        self.selected_vert_perc = QtWidgets.QSpinBox()
+        self.selected_vert_perc.setMinimum(0)
+        self.selected_vert_perc.setMaximum(100)
+        self.selected_vert_perc.setValue(100)
+        self.selected_vert_perc.setMinimumWidth(100)
+        self.selected_vert_perc.setSingleStep(5)
+
     def scatter_button(self):
         layout = QtWidgets.QGridLayout()
         self.scatter_btn = QtWidgets.QPushButton("Scatter")
-        layout.addWidget(self.scatter_btn, 13, 0)
+        layout.addWidget(self.scatter_btn, 30, 1)
         return layout
 
     def scatter_titles(self):
@@ -276,6 +297,7 @@ class ScatterUI(QtWidgets.QDialog):
         self.scatterobject.scatter_scale_zmin = self.scale_zmin.value()
         self.scatterobject.scatter_scale_zmax = self.scale_zmax.value()
         self.scatterobject.scatter_object()
+        self.scatterobject.scatter_percentage = self.selected_vert_perc.value()
 
     def lock_source_object(self):
         self.scatterobject.select_source_object()
@@ -336,6 +358,7 @@ class ScatterObject(object):
             if 'vtx[' not in obj:
                 self.scatter_target_def.remove(obj)
         self.current_target_def = self.scatter_target_def
+
 
     def select_source_object(self):
         self.scatter_obj_def = cmds.ls(os=True, o=True)
