@@ -278,12 +278,18 @@ class ScatterUI(QtWidgets.QDialog):
         self.scale_zmax.setMinimumWidth(100)
         self.scale_zmax.setSingleStep(.1)
 
-    def _create_selected_vert_percentage_ui(self):
+    def _vert_percent_offset_ui(self):
         layout = QtWidgets.QGridLayout()
         self.selected_vert_lbl = QtWidgets.QLabel("Scatter Percentage")
-        self._set_selected_vert_percentage_spinbox()
+        self.obj_embed_offset_lbl = QtWidgets.QLabel("Position Offset Value")
+        self._vert_percent_spinbox()
+        self._offset_spinbox()
         layout.addWidget(self.selected_vert_lbl, 14, 0)
+        layout.addWidget(self.obj_embed_offset_lbl, 16, 0)
         layout.addWidget(self.selected_vert_perc, 15, 0)
+        layout.addWidget(self.obj_embed_offset, 17, 0)
+        self.selected_vert_perc.setFixedWidth(200)
+        self.obj_embed_offset.setFixedWidth(200)
         return layout
 
     def _offset_spinbox(self):
@@ -301,64 +307,71 @@ class ScatterUI(QtWidgets.QDialog):
         self.selected_vert_perc.setValue(100)
         self.selected_vert_perc.setSingleStep(5)
 
-    def scatter_button(self):
+    def _scat_button_ui(self):
         layout = QtWidgets.QGridLayout()
-        self.scatter_btn = QtWidgets.QPushButton("Scatter")
-        layout.addWidget(self.scatter_btn, 30, 1)
+        self.scatter_btn = QtWidgets.QPushButton("Scatter Object")
+        self.scatter_btn.setFixedWidth(500)
+        layout.addWidget(self.scatter_btn, 16, 0)
         return layout
 
-    def scatter_titles(self):
+    def _object_titles(self):
         self.scatter_targ_lbl = QtWidgets.QLabel("Source Object")
         self.scatter_obj_lbl = QtWidgets.QLabel("Destination Object")
         layout = QtWidgets.QGridLayout()
-        layout.addWidget(self.scatter_targ_lbl, 2, 0)
-        layout.addWidget(self.scatter_obj_lbl, 2, 3)
+        layout.addWidget(self.scatter_targ_lbl, 0, 0)
+        layout.addWidget(self.scatter_obj_lbl, 0, 3)
         return layout
 
-    def scatter_input(self):
-        self.scatterobject.scatter_x_min = self.xrot_min.value()
-        self.scatterobject.scatter_x_max = self.xrot_max.value()
-        self.scatterobject.scatter_y_min = self.yrot_min.value()
-        self.scatterobject.scatter_y_max = self.yrot_max.value()
-        self.scatterobject.scatter_z_min = self.zrot_min.value()
-        self.scatterobject.scatter_z_max = self.zrot_max.value()
-        self.scatterobject.scatter_scale_xmin = self.scale_xmin.value()
-        self.scatterobject.scatter_scale_xmax = self.scale_xmax.value()
-        self.scatterobject.scatter_scale_ymin = self.scale_ymin.value()
-        self.scatterobject.scatter_scale_ymax = self.scale_ymax.value()
-        self.scatterobject.scatter_scale_zmin = self.scale_zmin.value()
-        self.scatterobject.scatter_scale_zmax = self.scale_zmax.value()
-        self.scatterobject.scatter_object()
+    def _user_input_values(self):
+        self.scatterobject.scat_x_min = self.xrot_min.value()
+        self.scatterobject.scat_x_max = self.xrot_max.value()
+        self.scatterobject.scat_y_min = self.yrot_min.value()
+        self.scatterobject.scat_y_max = self.yrot_max.value()
+        self.scatterobject.scat_z_min = self.zrot_min.value()
+        self.scatterobject.scat_z_max = self.zrot_max.value()
+        self.scatterobject.scat_scale_xmin = self.scale_xmin.value()
+        self.scatterobject.scat_scale_xmax = self.scale_xmax.value()
+        self.scatterobject.scat_scale_ymin = self.scale_ymin.value()
+        self.scatterobject.scat_scale_ymax = self.scale_ymax.value()
+        self.scatterobject.scat_scale_zmin = self.scale_zmin.value()
+        self.scatterobject.scat_scale_zmax = self.scale_zmax.value()
         self.scatterobject.scatter_percentage = self.selected_vert_perc.value()
+        self.scatterobject.obj_pos_offset = self.obj_embed_offset.value()
 
-    def lock_source_object(self):
-        self.scatterobject.select_source_object()
+    def _select_source_object(self):
+        self.scatterobject.choose_source_object()
         self.scatter_obj.setText(self.scatterobject.current_object_def)
 
-    def lock_destination_object(self):
-        self.scatterobject.select_destination_object()
+    def _select_dest_object(self):
+        self.scatterobject.choose_dest_object()
         self.scatter_targ.setText(str(self.scatterobject.current_target_def))
 
 
 class ScatterObject(object):
 
     def __init__(self):
-        self.scatter_x_min = 0
-        self.scatter_x_max = 0
-        self.scatter_y_min = 0
-        self.scatter_y_max = 0
-        self.scatter_z_min = 0
-        self.scatter_z_max = 0
-        self.scatter_scale_xmin = 0
-        self.scatter_scale_xmax = 0
-        self.scatter_scale_ymin = 0
-        self.scatter_scale_ymax = 0
-        self.scatter_scale_zmin = 0
-        self.scatter_scale_zmax = 0
+        self._init_scat()
         self.scatter_obj_def = None
         self.current_object_def = None
         self.scatter_target_def = None
         self.current_target_def = None
+        self.scatter_choice = 0
+        self.obj_pos_offset = 0
+
+    def _init_scat(self):
+        self.scat_x_min = 0
+        self.scat_x_max = 0
+        self.scat_y_min = 0
+        self.scat_y_max = 0
+        self.scat_z_min = 0
+        self.scat_z_max = 0
+        self.scat_scale_xmin = 0
+        self.scat_scale_xmax = 0
+        self.scat_scale_ymin = 0
+        self.scat_scale_ymax = 0
+        self.scat_scale_zmin = 0
+        self.scat_scale_zmax = 0
+        self.scatter_percentage = 0
 
     def scatter_object(self):
         if cmds.objectType(self.current_object_def) == "transform":
