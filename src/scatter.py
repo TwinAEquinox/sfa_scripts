@@ -373,15 +373,25 @@ class ScatterObject(object):
         self.scat_scale_zmax = 0
         self.scatter_percentage = 0
 
+    def scat_align_check(self):
+        if self.scatter_choice == 0:
+            self.select_random_vertices()
+            self.scatter_object()
+        elif self.scatter_choice == 1:
+            self.select_random_vertices()
+            self.align_normals()
+
     def scatter_object(self):
-        if cmds.objectType(self.current_object_def) == "transform":
-            for target in self.scatter_target_def:
-                self.scatterObject = cmds.instance(self.current_object_def,
-                                                   name=self.current_object_def
-                                                   + "_instance#")
-                x_point, y_point, z_point = cmds.pointPosition(target)
-                cmds.move(x_point, y_point, z_point, self.scatterObject)
-                self.randomize()
+        object_grouping = cmds.group(empty=True, name="instance_group#")
+        for target in self.percentage_selection:
+            self.scatterObject = cmds.instance(self.current_object_def,
+                                               name=self.current_object_def
+                                                    + "_instance#")
+            cmds.parent(self.scatterObject, object_grouping)
+            x_point, y_point, z_point = cmds.pointPosition(target)
+            cmds.move(x_point, y_point, z_point, self.scatterObject)
+            self.random_rotation()
+            self.random_scale()
 
     def randomize(self):
         xRot = random.uniform(self.scatter_x_min, self.scatter_x_max)
