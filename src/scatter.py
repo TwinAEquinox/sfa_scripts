@@ -99,19 +99,31 @@ class ScatterUI(QtWidgets.QDialog):
         self._user_input_values()
         self.scatterobject.scat_align_check()
 
-    def scatter_field_ui(self):
-        layout = self.scatter_titles()
+    def _scat_field_ui(self):
+        layout = self._object_titles()
         self.scatter_obj = QtWidgets.QLineEdit()
-        self.scatter_obj_pb = QtWidgets.QPushButton("Select")
-        self.scatter_obj_pb.setFixedWidth(50)
+        self.scatter_obj_pb = QtWidgets.QPushButton("Select Object")
+        self.scatter_obj_pb.setFixedWidth(100)
         self.scatter_targ = QtWidgets.QLineEdit()
-        self.scatter_targ_pb = QtWidgets.QPushButton("Select")
-        self.scatter_targ_pb.setFixedWidth(50)
-        layout.addWidget(self.scatter_obj, 3, 0)
-        layout.addWidget(self.scatter_obj_pb, 1, 2)
-        layout.addWidget(self.scatter_targ, 3, 3)
-        layout.addWidget(self.scatter_targ_pb, 1, 4)
+        self.scatter_targ_pb = QtWidgets.QPushButton("Select Object")
+        self.scatter_targ_pb.setFixedWidth(100)
+        layout.addWidget(self.scatter_obj, 1, 0)
+        layout.addWidget(self.scatter_obj_pb, 0, 2)
+        layout.addWidget(self.scatter_targ, 1, 3)
+        layout.addWidget(self.scatter_targ_pb, 0, 4)
         return layout
+
+    def _align_to_normals_ui(self):
+        layout = QtWidgets.QGridLayout()
+        self.align_to_normals = QtWidgets.QCheckBox("Align to Surface Normals")
+        layout.addWidget(self.align_to_normals, 2, 0)
+        return layout
+
+    def _align_to_normals_check(self):
+        if self.align_to_normals.isChecked():
+            self.scatterobject.scatter_choice = 1
+        else:
+            self.scatterobject.scatter_choice = 0
 
     def xrot_ui(self):
         layout = QtWidgets.QGridLayout()
