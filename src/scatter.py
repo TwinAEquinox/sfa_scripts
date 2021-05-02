@@ -393,29 +393,56 @@ class ScatterObject(object):
             self.random_rotation()
             self.random_scale()
 
-    def randomize(self):
-        xRot = random.uniform(self.scatter_x_min, self.scatter_x_max)
-        yRot = random.uniform(self.scatter_y_min, self.scatter_y_max)
-        zRot = random.uniform(self.scatter_z_min, self.scatter_z_max)
-        cmds.rotate(xRot, yRot, zRot, self.scatterObject)
-        scaleFactorX = random.uniform(self.scatter_scale_xmin,
-                                      self.scatter_scale_xmax)
-        scaleFactorY = random.uniform(self.scatter_scale_ymin,
-                                      self.scatter_scale_ymax)
-        scaleFactorZ = random.uniform(self.scatter_scale_zmin,
-                                      self.scatter_scale_zmax)
-        cmds.scale(scaleFactorX, scaleFactorY, scaleFactorZ,
-                   self.scatterObject)
+    def align_normals(self):
+        object_grouping = cmds.group(empty=True, name="instance_group#")
+        for target in self.percentage_selection:
+            self.scatterObject = cmds.instance(self.current_object_def,
+                                               name=self.current_object_def
+                                               + "_instance#")
+            cmds.parent(self.scatterObject, object_grouping)
+            x_point, y_point, z_point = cmds.pointPosition(target)
+            cmds.move(x_point, y_point, z_point, self.scatterObject)
+            self.random_scale()
+            constraint = cmds.normalConstraint(self.scatter_target_def,
+                                               self.scatterObject)
+            cmds.delete(constraint)
+            self.offset_object()
 
-    def select_destination_object(self):
-        self.scatter_target_def = cmds.ls(os=True, fl=True)
-        for obj in self.scatter_target_def:
-            if 'vtx[' not in obj:
-                self.scatter_target_def.remove(obj)
+    def offset_object(self):
+        cmds.move(self.obj_pos_offset, 0, 0, self.scatterObject,
+                  objectSpace=True, relative=True)
+
+    def choose_source_object(self):
+        self.scatter_obj_def = cmds.ls(os=True, o=True)
+        self.current_object_def = self.scatter_obj_def[-1]
+
+    def choose_dest_object(self):
+        selection = cmds.ls(os=True, fl=True)
+        self.scatter_target_def = cmds.polyListComponentConversion(
+            selection, toVertex=True)
+        self.scatter_target_def = cmds.filterExpand(self.scatter_target_def,
+                                                    selectionMask=31)
         self.current_target_def = self.scatter_target_def
 
+    def select_random_vertices(self):
+        random_amount = int(round(len(self.scatter_target_def)
+                                  * (self.scatter_percentage * 0.01)))
+        self.percentage_selection = random.sample(self.scatter_target_def,
+                                                  k=random_amount)
+        cmds.select(self.percentage_selection)
 
-    def select_source_object(self):
-        self.scatter_obj_def = cmds.ls(os=True, o=True)
-        if len(self.scatter_obj_def) > 0:
-            self.current_object_def = self.scatter_obj_def[-1]
+    def random_rotation(self):
+        x_rot = random.uniform(self.scat_x_min, self.scat_x_max)
+        y_rot = random.uniform(self.scat_y_min, self.scat_y_max)
+        z_rot = random.uniform(self.scat_z_min, self.scat_z_max)
+        cmds.rotate(x_rot, y_rot, z_rot, self.scatterObject)
+
+    def random_scale(self):
+        scale_factor_x = random.uniform(self.scat_scale_xmin,
+                                        self.scat_scale_xmax)
+        scale_factor_y = random.uniform(self.scat_scale_ymin,
+                                        self.scat_scale_ymax)
+        scale_factor_z = random.uniform(self.scat_scale_zmin,
+                                        self.scat_scale_zmax)
+        cmds.scale(scale_factor_x, scale_factor_y, scale_factor_z,
+                   self.scatterObject)
