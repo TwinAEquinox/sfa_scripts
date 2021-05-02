@@ -125,40 +125,19 @@ class ScatterUI(QtWidgets.QDialog):
         else:
             self.scatterobject.scatter_choice = 0
 
-    def xrot_ui(self):
+    def _xrot_ui(self):
         layout = QtWidgets.QGridLayout()
-        self.x_min_lbl = QtWidgets.QLabel("X Rotation Min")
-        self.x_max_lbl = QtWidgets.QLabel("X Rotation Max")
-        self.xrot_spinbox()
-        layout.addWidget(self.x_min_lbl, 7, 0)
-        layout.addWidget(self.xrot_min, 8, 0)
-        layout.addWidget(self.x_max_lbl, 9, 0)
-        layout.addWidget(self.xrot_max, 10, 0)
+        self.x_min_lbl = QtWidgets.QLabel("Min. X Rotation")
+        self.x_max_lbl = QtWidgets.QLabel("Max. X Rotation")
+        self._xrot_spinbox()
+        layout.addWidget(self.x_min_lbl, 1, 0)
+        layout.addWidget(self.xrot_min, 2, 0)
+        self.xrot_min.setFixedWidth(500)
+        layout.addWidget(self.x_max_lbl, 3, 0)
+        layout.addWidget(self.xrot_max, 4, 0)
         return layout
 
-    def yrot_ui(self):
-        layout = QtWidgets.QGridLayout()
-        self.y_min_lbl = QtWidgets.QLabel("Y Rotation Min")
-        self.y_max_lbl = QtWidgets.QLabel("Y Rotation Max")
-        self.yrot_spinbox()
-        layout.addWidget(self.y_min_lbl, 9, 0)
-        layout.addWidget(self.yrot_min, 10, 0)
-        layout.addWidget(self.y_max_lbl, 11, 0)
-        layout.addWidget(self.yrot_max, 12, 0)
-        return layout
-
-    def zrot_ui(self):
-        layout = QtWidgets.QGridLayout()
-        self.z_min_lbl = QtWidgets.QLabel("Z Rotation Min")
-        self.z_max_lbl = QtWidgets.QLabel("Z Rotation Max")
-        self.zrot_spinbox()
-        layout.addWidget(self.z_min_lbl, 11, 0)
-        layout.addWidget(self.zrot_min, 12, 0)
-        layout.addWidget(self.z_max_lbl, 13, 0)
-        layout.addWidget(self.zrot_max, 14, 0)
-        return layout
-
-    def xrot_spinbox(self):
+    def _xrot_spinbox(self):
         self.xrot_min = QtWidgets.QSpinBox()
         self.xrot_min.setMinimum(0)
         self.xrot_min.setMaximum(360)
@@ -171,7 +150,19 @@ class ScatterUI(QtWidgets.QDialog):
         self.xrot_max.setMinimumWidth(100)
         self.xrot_max.setSingleStep(10)
 
-    def yrot_spinbox(self):
+    def _yrot_ui(self):
+        layout = QtWidgets.QGridLayout()
+        self.y_min_lbl = QtWidgets.QLabel("Min. Y Rotation")
+        self.y_max_lbl = QtWidgets.QLabel("Max. Y Rotation")
+        self._yrot_spinbox()
+        layout.addWidget(self.y_min_lbl, 5, 0)
+        layout.addWidget(self.yrot_min, 6, 0)
+        self.yrot_min.setFixedWidth(500)
+        layout.addWidget(self.y_max_lbl, 7, 0)
+        layout.addWidget(self.yrot_max, 8, 0)
+        return layout
+
+    def _yrot_spinbox(self):
         self.yrot_min = QtWidgets.QSpinBox()
         self.yrot_min.setMinimum(0)
         self.yrot_min.setMaximum(360)
@@ -184,7 +175,19 @@ class ScatterUI(QtWidgets.QDialog):
         self.yrot_max.setMinimumWidth(100)
         self.yrot_max.setSingleStep(10)
 
-    def zrot_spinbox(self):
+    def _zrot_ui(self):
+        layout = QtWidgets.QGridLayout()
+        self.z_min_lbl = QtWidgets.QLabel("Min. Z Rotation")
+        self.z_max_lbl = QtWidgets.QLabel("Max. Z Rotation")
+        self._zrot_spinbox()
+        layout.addWidget(self.z_min_lbl, 9, 0)
+        layout.addWidget(self.zrot_min, 10, 0)
+        self.zrot_min.setFixedWidth(500)
+        layout.addWidget(self.z_max_lbl, 11, 0)
+        layout.addWidget(self.zrot_max, 12, 0)
+        return layout
+
+    def _zrot_spinbox(self):
         self.zrot_min = QtWidgets.QSpinBox()
         self.zrot_min.setMinimum(0)
         self.zrot_min.setMaximum(360)
@@ -197,40 +200,19 @@ class ScatterUI(QtWidgets.QDialog):
         self.zrot_max.setMinimumWidth(100)
         self.zrot_max.setSingleStep(10)
 
-    def xscale_ui(self):
+    def _xscale_ui(self):
         layout = QtWidgets.QGridLayout()
-        self.scale_xmin_lbl = QtWidgets.QLabel("Scale X Min")
-        self.scale_xmax_lbl = QtWidgets.QLabel("Scale X Max")
-        self.xscale_spinbox()
-        layout.addWidget(self.scale_xmin_lbl, 1, 0)
-        layout.addWidget(self.scale_xmin, 2, 0)
-        layout.addWidget(self.scale_xmax_lbl, 3, 0)
-        layout.addWidget(self.scale_xmax, 4, 0)
+        self.scale_xmin_lbl = QtWidgets.QLabel("Min. X Scale")
+        self.scale_xmax_lbl = QtWidgets.QLabel("Max. X Scale")
+        self._xscale_spinbox()
+        layout.addWidget(self.scale_xmin_lbl, 14, 0)
+        layout.addWidget(self.scale_xmin, 15, 0)
+        self.scale_xmin.setFixedWidth(500)
+        layout.addWidget(self.scale_xmax_lbl, 16, 0)
+        layout.addWidget(self.scale_xmax, 17, 0)
         return layout
 
-    def yscale_ui(self):
-        layout = QtWidgets.QGridLayout()
-        self.scale_ymin_lbl = QtWidgets.QLabel("Scale Y Min")
-        self.scale_ymax_lbl = QtWidgets.QLabel("Scale Y Max")
-        self.yscale_spinbox()
-        layout.addWidget(self.scale_ymin_lbl, 3, 0)
-        layout.addWidget(self.scale_ymin, 4, 0)
-        layout.addWidget(self.scale_ymax_lbl, 5, 0)
-        layout.addWidget(self.scale_ymax, 6, 0)
-        return layout
-
-    def zscale_ui(self):
-        layout = QtWidgets.QGridLayout()
-        self.scale_zmin_lbl = QtWidgets.QLabel("Scale Z Min")
-        self.scale_zmax_lbl = QtWidgets.QLabel("Scale Z Max")
-        self.zscale_spinbox()
-        layout.addWidget(self.scale_zmin_lbl, 5, 0)
-        layout.addWidget(self.scale_zmin, 6, 0)
-        layout.addWidget(self.scale_zmax_lbl, 7, 0)
-        layout.addWidget(self.scale_zmax, 8, 0)
-        return layout
-
-    def xscale_spinbox(self):
+    def _xscale_spinbox(self):
         self.scale_xmin = QtWidgets.QDoubleSpinBox()
         self.scale_xmin.setMinimum(0.1)
         self.scale_xmin.setValue(1.0)
@@ -244,7 +226,19 @@ class ScatterUI(QtWidgets.QDialog):
         self.scale_xmax.setMinimumWidth(100)
         self.scale_xmax.setSingleStep(.1)
 
-    def yscale_spinbox(self):
+    def _yscale_ui(self):
+        layout = QtWidgets.QGridLayout()
+        self.scale_ymin_lbl = QtWidgets.QLabel("Min. Y Scale")
+        self.scale_ymax_lbl = QtWidgets.QLabel("Max. Y Scale")
+        self._yscale_spinbox()
+        layout.addWidget(self.scale_ymin_lbl, 18, 0)
+        layout.addWidget(self.scale_ymin, 19, 0)
+        self.scale_ymin.setFixedWidth(500)
+        layout.addWidget(self.scale_ymax_lbl, 20, 0)
+        layout.addWidget(self.scale_ymax, 21, 0)
+        return layout
+
+    def _yscale_spinbox(self):
         self.scale_ymin = QtWidgets.QDoubleSpinBox()
         self.scale_ymin.setMinimum(0.1)
         self.scale_ymin.setValue(1.0)
@@ -258,7 +252,19 @@ class ScatterUI(QtWidgets.QDialog):
         self.scale_ymax.setMinimumWidth(100)
         self.scale_ymax.setSingleStep(.1)
 
-    def zscale_spinbox(self):
+    def _zscale_ui(self):
+        layout = QtWidgets.QGridLayout()
+        self.scale_zmin_lbl = QtWidgets.QLabel("Min. Z Scale")
+        self.scale_zmax_lbl = QtWidgets.QLabel("Max. Z Scale")
+        self._zscale_spinbox()
+        layout.addWidget(self.scale_zmin_lbl, 22, 0)
+        layout.addWidget(self.scale_zmin, 23, 0)
+        self.scale_zmin.setFixedWidth(500)
+        layout.addWidget(self.scale_zmax_lbl, 24, 0)
+        layout.addWidget(self.scale_zmax, 25, 0)
+        return layout
+
+    def _zscale_spinbox(self):
         self.scale_zmin = QtWidgets.QDoubleSpinBox()
         self.scale_zmin.setMinimum(0.1)
         self.scale_zmin.setValue(1.0)
